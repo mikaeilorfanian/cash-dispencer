@@ -55,3 +55,25 @@ def test_invalid_numbers(unavailable_number):
 )
 def test_two_digit_numbers(two_digit_number, correct_result):
     assert dispence(two_digit_number) == correct_result
+
+def make_expected_results(num_of_100s, *other_nums):
+    res = [100 for i in range(num_of_100s)]
+    res.extend(other_nums)
+
+    return res
+
+
+@pytest.mark.parametrize(
+    'large_num,correct_result',
+    [
+        ('100', [100]),
+        ('110', [100, 10]),
+        ('180', [100, 50, 20, 10]),
+        ('10000', make_expected_results(100)),
+        ('100010', make_expected_results(1000, 10)),
+        ('001010', make_expected_results(10, 10)),
+        ('0110', [100, 10]),
+    ],
+)
+def test_large_numbers(large_num, correct_result):
+    assert dispence(large_num) == correct_result
