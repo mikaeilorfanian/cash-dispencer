@@ -42,3 +42,16 @@ def test_invalid_numbers(invalid_number):
 def test_invalid_numbers(unavailable_number):
     with pytest.raises(NoteUnavailableException):
         dispence(unavailable_number)
+
+@pytest.mark.parametrize(
+    'two_digit_number,correct_result',
+    [
+        ('20', [20]),
+        ('50', [50]),
+        ('60', [50, 10]),
+        ('90', [50, 20, 20]),
+        ('30', [20, 10]),
+    ],
+)
+def test_two_digit_numbers(two_digit_number, correct_result):
+    assert dispence(two_digit_number) == correct_result
